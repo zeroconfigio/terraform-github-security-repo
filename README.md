@@ -52,6 +52,7 @@ provider (App auth or PAT) whose `owner` matches the repos being managed.
 - **Free-tier / security**, `private_free_tier`, `enable_*` toggles.
 - **Governance files**, `manage_security_md`, `manage_code_of_conduct`, `manage_codeowners`, `manage_icla`, `manage_ccla`, `manage_license`, …
 - **Workflows**, one `manage_workflow_*` per shared workflow.
+- **Workflow timeouts**, `workflow_timeout_minutes` (an object with one optional job timeout per managed workflow; set only the keys you want to change), `workflow_harden_runner_timeout_minutes` (default 5) and `workflow_osv_scanner_timeout_minutes` (default 10). They stop a hung runner from holding a job for GitHub's 360 minute default.
 - **Plan-time reads**, `github_token` (optional; only needed when `manage_security_md` or `enforce_pr_creation_policy` is true, for private-repo REST reads).
 
 ## License
