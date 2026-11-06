@@ -323,6 +323,35 @@ variable "manage_workflow_license" {
   default     = true
 }
 
+variable "workflow_timeout_minutes" {
+  type = object({
+    auto_update_pr = optional(number, 10)
+    betterleaks    = optional(number, 10)
+    cla_dco        = optional(number, 10)
+    clean_workflow = optional(number, 15)
+    commitlint     = optional(number, 10)
+    license        = optional(number, 10)
+    lock           = optional(number, 15)
+    osv_scan       = optional(number, 15)
+    scorecard      = optional(number, 10)
+    stale          = optional(number, 15)
+  })
+  description = "Job `timeout-minutes` for each managed workflow, so a hung runner fails fast instead of holding the job for GitHub's 360 minute default. Set only the keys you want to change; the rest keep their defaults."
+  default     = {}
+}
+
+variable "workflow_harden_runner_timeout_minutes" {
+  type        = number
+  description = "`timeout-minutes` for the step-security/harden-runner step in every managed workflow. The step has hung for hours in its pre-run phase, so it gets its own short limit."
+  default     = 5
+}
+
+variable "workflow_osv_scanner_timeout_minutes" {
+  type        = number
+  description = "`timeout-minutes` for the osv-scanner action step in the managed osv-scan workflow."
+  default     = 10
+}
+
 variable "bootstrap_license_checker_allow" {
   type        = bool
   description = "Bootstrap a starter .license-checker.allow (the JavaScript dep-license allowlist consumed by license.yml) into the repo when absent. Create-once: after the first apply the repo owns the file and Terraform never updates its content. Default false because the allowlist is per-repo policy; set true on a JavaScript repo that has no allowlist yet and would otherwise hard-fail the license gate. Errors at apply if the file already exists (set back to false in that case). Has no effect unless language == \"javascript\"."

@@ -458,10 +458,13 @@ resource "github_repository_file" "funding" {
 resource "github_repository_file" "workflow_stale" {
   count = var.manage_workflow_stale ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/stale.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/stale.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/stale.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/stale.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.stale
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync stale.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -473,10 +476,13 @@ resource "github_repository_file" "workflow_stale" {
 resource "github_repository_file" "workflow_lock" {
   count = var.manage_workflow_lock ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/lock.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/lock.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/lock.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/lock.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.lock
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync lock.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -503,10 +509,13 @@ resource "github_repository_file" "workflow_dependabot_auto_merge" {
 resource "github_repository_file" "workflow_auto_update_pr" {
   count = var.manage_workflow_auto_update_pr ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/auto-update-pr.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/auto-update-pr.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/auto-update-pr.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/auto-update-pr.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.auto_update_pr
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync auto-update-pr.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -518,10 +527,13 @@ resource "github_repository_file" "workflow_auto_update_pr" {
 resource "github_repository_file" "workflow_cla_dco" {
   count = var.manage_workflow_cla_dco ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/cla-dco.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/cla-dco.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/cla-dco.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/cla-dco.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.cla_dco
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync cla-dco.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -533,10 +545,13 @@ resource "github_repository_file" "workflow_cla_dco" {
 resource "github_repository_file" "workflow_scorecard" {
   count = local.eff_manage_workflow_scorecard ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/scorecard.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/scorecard.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/scorecard.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/scorecard.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.scorecard
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync scorecard.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -548,10 +563,14 @@ resource "github_repository_file" "workflow_scorecard" {
 resource "github_repository_file" "workflow_osv_scan" {
   count = var.manage_workflow_osv_scan ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/osv-scan.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/osv-scan.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/osv-scan.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/osv-scan.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.osv_scan
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+    osv_scanner_timeout_minutes   = var.workflow_osv_scanner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync osv-scan.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -563,10 +582,13 @@ resource "github_repository_file" "workflow_osv_scan" {
 resource "github_repository_file" "workflow_betterleaks" {
   count = var.manage_workflow_betterleaks ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/betterleaks.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/betterleaks.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/betterleaks.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/betterleaks.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.betterleaks
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync betterleaks.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -578,10 +600,13 @@ resource "github_repository_file" "workflow_betterleaks" {
 resource "github_repository_file" "workflow_clean_workflow" {
   count = var.manage_workflow_clean_workflow ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/clean-workflow.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/clean-workflow.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/clean-workflow.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/clean-workflow.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.clean_workflow
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync clean-workflow.yml from the hardened-repo module"
   overwrite_on_create = true
 
@@ -614,7 +639,9 @@ resource "github_repository_file" "workflow_license" {
   file       = ".github/workflows/license.yml"
   branch     = "main"
   content = templatefile("${path.module}/workflows/license.yml.tftpl", {
-    language = var.language
+    language                      = var.language
+    job_timeout_minutes           = var.workflow_timeout_minutes.license
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
   })
   commit_message      = "chore(ci): sync license.yml from the hardened-repo module"
   overwrite_on_create = true
@@ -642,10 +669,13 @@ resource "github_repository_file" "workflow_dependency_review" {
 resource "github_repository_file" "workflow_commitlint" {
   count = var.manage_workflow_commitlint ? 1 : 0
 
-  repository          = github_repository.this.name
-  file                = ".github/workflows/commitlint.yml"
-  branch              = "main"
-  content             = templatefile("${path.module}/workflows/commitlint.yml.tftpl", {})
+  repository = github_repository.this.name
+  file       = ".github/workflows/commitlint.yml"
+  branch     = "main"
+  content = templatefile("${path.module}/workflows/commitlint.yml.tftpl", {
+    job_timeout_minutes           = var.workflow_timeout_minutes.commitlint
+    harden_runner_timeout_minutes = var.workflow_harden_runner_timeout_minutes
+  })
   commit_message      = "chore(ci): sync commitlint.yml from the hardened-repo module"
   overwrite_on_create = true
 
